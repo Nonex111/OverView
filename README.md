@@ -7,7 +7,7 @@ The part of calling GPT API is commented for the fluency of demo, you can reprod
 
 
 ### Simple version: Steps to reproduce the demo 
->(No actual interaction between frontend and backend. Pages are static.)
+>(Just to show the workflow, no actual interaction between frontend and backend. Pages are static.)
 - 1.In the frontend folder, modify all the paths in all html files 
 - 2.Open the home-page.html
 
