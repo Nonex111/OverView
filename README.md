@@ -16,11 +16,11 @@ The part of calling OpenAI API is commented for the fluency of demo, you can rep
 >(You have to make more twists to reproduce all the functionalities)
 - 1.Install requirements.txt in the backend folder
 - 2.In the frontend folder, modify all the paths in all html files 
-- 3.Add your GPT API key in basic_flask_app.py at line 57
+- 3.Add your OpenAI API key in basic_flask_app.py at line 57
 - 4.In basic_flask_app.py at line 62 to 64, do some commenting and uncommenting
 - 5.Run basic_flask_app.py as the server
 - 6.Open the home-page.html
-- 7.You can try the functionality of calling GPT API in Analyze-page-II.html
+- 7.You can try the functionality of calling OpenAI API in Analyze-page-II.html
 
 
 ---
