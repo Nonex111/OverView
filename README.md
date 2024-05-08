@@ -6,13 +6,14 @@ All the technical stuff are done by one member with the role of technical expert
 The part of calling GPT API is commented for the fluency of demo, you can reproduce that functionality by uncommenting it, which is specified in step 4 below.
 
 
-### A: Steps to reproduce the demo
+### Simple version: Steps to reproduce the demo 
 >(No actual interaction between frontend and backend. Pages are static.)
 - 1.In the frontend folder, modify all the paths in all html files 
 - 2.Open the home-page.html
 
 
-### B: Steps to test functionalities or continue on this project
+### Full version: Steps to test all the functionalities/continue on this project
+>(You have to make more twists to reproduce all the functionalities)
 - 1.Install requirements.txt in the backend folder
 - 2.In the frontend folder, modify all the paths in all html files 
 - 3.Add your GPT API key in basic_flask_app.py at line 57
