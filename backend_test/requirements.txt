@@ -1,0 +1,13 @@
+pandas
+requests
+matplotlib
+snownlp
+wordcloud
+numpy
+jieba
+openpyxl
+openai
+tiktoken
+
+flask
+flask_cors

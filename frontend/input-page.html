@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview - Input Page</title>
+    <style>
+        body, h1, h2, p { margin: 0; padding: 0; }
+        body {
+            height: 100vh; /* Full height of the viewport */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+
+            overflow-x: hidden; /* Prevents horizontal scroll */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 40px;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar nav a {
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: 500;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .navbar nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .content {
+            /*padding-top: 20px;*/
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .input-wrapper {
+            display: flex; /* Use flexbox for alignment */
+            width: 50%;
+            margin: 20px auto;
+            border-radius: 25px; /* Rounded edges for the container */
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid #FFF;
+        }
+        .text-input {
+            flex-grow: 1; /* Allows the input to fill the space */
+            padding: 15px;
+            border: none; /* Removes individual border */
+            font-size: 1rem;
+            color: #333;
+            outline: none; /* Removes the outline to match the design */
+            border-radius: 25px 0 0 25px; /* Rounded edges on the left side only */
+        }
+        .go-button {
+            padding: 15px 20px;
+            border-radius: 0 25px 25px 0; /* Rounded edges on the right side */
+            background-color: #FFF;
+            color: #764ba2;
+            border: none; /* Removes individual border */
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            opacity: 0.5; /* Button appears faded when not active */
+        }
+        .go-button:enabled {
+            cursor: pointer;
+            pointer-events: auto; /* Make the button clickable when enabled */
+            opacity: 1; /* Button appears active when enabled */
+        }
+        .go-button:enabled:hover {
+            background-color: #667eea;
+            color: #FFFFFF;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey background */
+            border-top: 16px solid #3498db; /* Blue color for the spinner part */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Additional style to center the loader on the page */
+        .loader-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh; /* Take full viewport height */
+        }
+
+        /* Hide loader by default */
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <nav>
+        <a href="C:/Code/GTSI%20Course/ECE6001/frontend/home-page.html">Home</a> 
+        <a href="#tutorial">Tutorial</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+</div>
+
+<div class="content">
+    <div class="input-wrapper">
+        <input type="text" id="codeInput" class="text-input" placeholder="Click:'Share' - 'Embed in code', and paste here" oninput="checkInput()" />
+        <button id="goButton" class="go-button" disabled>Go to Analyze</button>
+    </div>
+    <div id="loader" class="loader-container hidden">
+        <div class="loader"></div>
+    </div>
+</div>
+
+<script>
+    function checkInput() {
+        var input = document.getElementById('codeInput').value;
+        var goButton = document.getElementById('goButton');
+        if (input.trim() !== '') {
+            goButton.disabled = false;
+            goButton.style.pointerEvents = 'auto'; /* Make the button clickable */
+            goButton.style.opacity = 1; /* Button appears active */
+        } else {
+            goButton.disabled = true;
+            goButton.style.pointerEvents = 'none';
+            goButton.style.opacity = 0.5; /* Button appears faded */
+        }
+    }
+
+    document.getElementById('goButton').addEventListener('click', function() {
+        document.getElementById('loader').classList.remove('hidden'); // Show the loader
+        
+        // Simulate a delay of processing after clicking the button
+        setTimeout(function() {
+            window.location.href = 'C:/Code/GTSI%20Course/ECE6001/frontend/Analyze-page-I.html';
+        }, 10000);
+
+    });
+</script>
+
+
+</body>
+</html>

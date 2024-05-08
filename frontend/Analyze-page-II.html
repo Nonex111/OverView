@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Page II</title>
+    <style>
+        body, h1, h2, p { margin: 0; padding: 0; }
+        body {
+            height: 100vh; /* Full height of the viewport */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+
+            overflow-x: hidden; /* Prevents horizontal scroll */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 40px;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar nav a {
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: 500;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .navbar nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .content {
+            /*padding-top: 20px;*/
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .input-wrapper {
+            display: flex; /* Use flexbox for alignment */
+            width: 65%;
+            margin: 20px auto;
+            border-radius: 25px; /* Rounded edges for the container */
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid #FFF;
+        }
+        .text-input {
+            flex-grow: 1; /* Allows the input to fill the space */
+            padding: 15px;
+            font-size: 1rem;
+            color: #333;
+            outline: none; /* Removes the outline to match the design */
+            border-radius: 25px; 
+        }
+        .go-button {
+            padding: 15px 50px;
+            border-radius: 30px; /* Rounded edges on the right side */
+            background-color: #FFF;
+            color: #764ba2;
+            border: none; /* Removes individual border */
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            cursor: pointer;
+            pointer-events: auto; /* Make the button clickable when enabled */
+        }
+        .go-button:enabled {
+            cursor: pointer;
+            pointer-events: auto; /* Make the button clickable when enabled */
+            opacity: 1; /* Button appears active when enabled */
+        }
+        .go-button:hover {
+            background-color: #667eea;
+            color: #FFFFFF;
+        }
+        .text-box {
+            text-align: left;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 0 5px #ddd;
+            width: 65%;
+            height: auto;
+            margin: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            outline: none; /* Remove outline for aesthetics */
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey background */
+            border-top: 16px solid #3498db; /* Blue color for the spinner part */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Additional style to center the loader on the page */
+        .loader-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Take full viewport height */
+        }
+
+        /* Hide loader by default */
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <nav>
+        <a href="C:/Code/GTSI%20Course/ECE6001/frontend/home-page.html">Home</a> 
+        <a href="#tutorial">Tutorial</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+</div>
+
+<div class="content">
+    <div class="input-wrapper">
+        <input type="text" id="codeInput" class="text-input" placeholder="You'll get summary and suggestions by clicking the button directly. You can also add anything else you want to know about the comments here." />
+    </div>
+    <button id="goButton" class="go-button">Get Analyses</button>
+
+    <div id="loader" class="loader-container hidden">
+        <div class="loader"></div>
+      </div>
+      
+    <div id="markdownContainer" class="text-box hidden"></div>
+</div>
+
+    
+
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    document.getElementById('goButton').addEventListener('click', function() {
+        markdownContainer.innerHTML = ''; // Clear previous content
+        document.getElementById('loader').classList.remove('hidden'); // Show the loader
+        document.getElementById('markdownContainer').classList.remove('hidden');
+        document.getElementById('codeInput').classList.add('hidden');
+        document.getElementById('goButton').classList.add('hidden');
+        var userInput = document.getElementById('codeInput').value;
+        fetch('http://127.0.0.1:5000/process-string', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userString: userInput}),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Here, you can update the DOM with the received image URLs and strings.
+            document.getElementById('markdownContainer').innerHTML = marked.parse(data.additionalStrings);
+
+            document.getElementById('loader').classList.add('hidden');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('loader').classList.add('hidden');
+
+            // In case of an error, display a demo content
+            let demoMarkdownContent = '### Summary and Categorization of Perspectives:\n\n1. **Revealing Unethical Practices**: Several comments highlight how students use answer guides like "全解" to mimic responses during classes, suggesting a lack of original thought and potzdential ethical concerns with overreliance on such materials.\n\n2. **Recalling Past Experiences**: Many users share personal anecdotes from their school days, reminiscing about classmates using answer guides, interactions with teachers, being scolded for using external materials, and moments of humor or awkwardness during class.\n\n3. **Criticism of Teaching Methods**: There is criticism directed at teachers for merely reading from auxiliary materials during classes, leading to a lack of engagement or original teaching methods, which some view as detrimental to the learning process.\n\n### Recommendations for Video Improvement:\n\n1. **Diverse Teaching Strategies**: Encourage teachers to adopt varied teaching strategies beyond reading from answer guides, fostering critical thinking and engagement among students.\n2. **Interactive Sessions**: Promote interactive sessions where students discuss and analyze texts, encouraging active participation and deep understanding.\n3. **Authentic Learning**: Emphasize the value of original thinking and discourage the use of external materials as shortcuts to understanding materials.\n\n### Opportunities for Increased Profit:\n\n1. **Engagement Strategies**: Developing interactive sessions or supplementary materials that promote active learning could attract more viewers and engagement.\n2. **Premium Content**: Offering exclusive content or advanced guides could be monetized to benefit students seeking additional resources.\n3. **Collaborations**: Partnering with educators or experts to create specialized content tailored to specific subject areas could attract a larger audience.\n\nThese strategies aim to improve the educational value of the video content while exploring opportunities for maximizing profitability.';
+            demoMarkdownContent = demoMarkdownContent.replace(/\n(\d+)\./g, '\n- ');
+            document.getElementById('markdownContainer').innerHTML = marked.parse(demoMarkdownContent);
+        });
+    });
+</script>
+
+
+
+
+
+</body>
+</html>

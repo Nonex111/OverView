@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Page I</title>
+    <style>
+        /* Maintain the same styles as your home page for consistency */
+        body, h1, h2, p { margin: 0; padding: 0; }
+        body {
+
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            
+            overflow-x: hidden; /* Prevents horizontal scroll */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 40px;
+            color: white;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar nav a {
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: 500;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .navbar nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Darken on hover */
+        }   
+
+        .plots-grid {
+            max-width: 80%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-template-rows: auto auto; /* 2 rows */
+            gap: 50px; /* Space between plots */
+            padding-top: 50px; /* Space for navbar */
+            padding: 60px; /* Padding around the grid */
+            box-sizing: border-box; /* Include padding in total width */
+        }
+
+        .plot-container {
+            height: 300px;
+
+            color: black; /* Black text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto; /* Center in grid cell */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: for some depth */
+            cursor: pointer; /* Changes the cursor to the 'clickable' icon when hovering over the plot */
+        }
+
+        .plot-container img {
+            max-width: 100%;
+            height: auto; /* Maintains the aspect ratio of the image */
+            max-height: 100%;
+        }
+
+        .modal {
+            display: flex; /* Display flex to use flexbox */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (Image) */
+        .modal-content {
+            object-fit: contain;
+            margin: auto;
+            display: block;
+            width: 95%;
+            max-height: 95%; /* Consider responsiveness */
+            animation: zoom 0.15s;
+        }
+
+        /* Close Button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: white;
+            font-size: 55px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .analysis-button {
+            display: flex; /* Display flex to use flexbox */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+
+            width: 20%;
+            padding: 15px 30px; /* Increased padding */
+            background: #FFFFFF;
+            color: #764ba2;
+            text-decoration: none;
+            font-size: 1.2rem; /* Increased font size */
+            border: none;
+            border-radius: 30px; /* Rounded edges */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 50px; /* Added bottom margin to move the button lower */
+        }
+        .analysis-button:hover {
+            background-color: #667eea;
+            color: #FFFFFF;
+        }
+        
+
+        @keyframes zoom {
+        from {transform: scale(0)}
+        to {transform: scale(1)}
+
+        
+
+    }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <nav>
+        <a href="C:/Code/GTSI%20Course/ECE6001/frontend/home-page.html">Home</a>
+        <a href="#tutorial">Tutorial</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+</div>
+
+<div id="myModal" class="modal">
+    <!-- The Close Button -->
+    <span class="close">&times;</span>
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="modalImg">
+</div>
+
+<!-- Plot Grid -->
+<div class="plots-grid">
+    <!-- Plot containers -->
+    <div class="plot-container" onclick="openModal(this.children[0].src)">
+        <!-- Image or Plot 1 -->
+        <img src="C:\Code\GTSI Course\ECE6001\backend_test\plot\BV11w4m1o7Qu\评论数量统计-折线图.png" alt="Plot 1"  style="height: 90%;">
+    </div>
+    <div class="plot-container" onclick="openModal(this.children[0].src)">
+        <!-- Image or Plot 2 -->
+        <img src="C:\Code\GTSI Course\ECE6001\backend_test\plot\BV11w4m1o7Qu\评论内容_词云图.jpg" alt="Plot 2" style="width: 90%;">
+    </div>
+    <div class="plot-container" onclick="openModal(this.children[0].src)">
+        <!-- Image or Plot 3 -->
+        <img src="C:\Code\GTSI Course\ECE6001\backend_test\plot\BV11w4m1o7Qu\IP属地-饼图.png" alt="Plot 3" style="width: 90%;">
+    </div>
+    <div class="plot-container" onclick="openModal(this.children[0].src)">
+        <!-- Image or Plot 4 -->
+        <img src="C:\Code\GTSI Course\ECE6001\backend_test\plot\BV11w4m1o7Qu\情感分布-饼图.png" alt="Plot 4" style="width: 90%;">
+    </div>
+</div>
+
+
+
+
+<!-- Separate button for navigation -->
+<a href="C:\Code\GTSI Course\ECE6001\frontend\Analyze-page-II.html" class="analysis-button">Get further analyses and suggestions from GPT</a>
+
+<br>
+<br><br>
+<br>
+
+
+<script>
+    // Function to open the modal
+    function openModal(src) {
+        // Get the modal
+        var modal = document.getElementById('myModal');
+        // Get the image that will be displayed in the modal
+        var modalImg = document.getElementById("modalImg");
+        // Set the src of the modal image to the src of the clicked image
+        var navbar = document.querySelector('.navbar');
+        modalImg.src = src;
+        // Display the modal
+        modal.style.display = "flex";
+        navbar.style.display = "none"; // Hide the navbar
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        var modal = document.getElementById('myModal');
+        var navbar = document.querySelector('.navbar'); 
+        modal.style.display = "none";
+        navbar.style.display = "flex"; // Show the navbar again
+    }
+</script>
+
+</body>
+</html>
